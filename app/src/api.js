@@ -1,4 +1,6 @@
 
+const ROBOT_SHARK_API_URL = 'http://localhost:8000'
+
 const success = (data) => ({
   status: { ok: true },
   ...data
@@ -10,10 +12,10 @@ const fail = (data = {}) => ({
 })
 
 export const setAccessToken = async (publicToken) => {
-  const response = await fetch("/api/set_access_token", {
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/set_access_token`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencodedcharset=UTF-8",
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
     },
     body: `public_token=${publicToken}`
   })
@@ -26,7 +28,7 @@ export const setAccessToken = async (publicToken) => {
 }
 
 export const getInfo = async () => {
-  const response = await fetch("/api/info", { 
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/info`, { 
     method: "POST" 
   })
   if (!response.ok) return fail()
@@ -37,7 +39,7 @@ export const getInfo = async () => {
 }
 
 export const createLinkToken = async () => {
-  const response = await fetch("/api/create_link_token", { 
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/create_link_token`, { 
     method: "POST" 
   })
   if (!response.ok) return fail()
@@ -48,7 +50,7 @@ export const createLinkToken = async () => {
 }
 
 export const createLinkTokenForPayment = async () => {
-  const response = await fetch("/api/create_link_token_for_payment", { 
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/create_link_token_for_payment`, { 
     method: "POST" 
   })
   if (!response.ok) return fail()
@@ -58,10 +60,46 @@ export const createLinkTokenForPayment = async () => {
   })
 }
 
+export const listAccounts = async () => {
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/accounts`, { 
+    method: "GET"
+  })
+  if (!response.ok) return fail()
+  const data = await response.json()
+  return success({
+    accounts: data.accounts || [],
+    item: data.item
+  })
+}
+
+export const getInstitution = async () => {
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/item`, { 
+    method: "GET"
+  })
+  if (!response.ok) return fail()
+  const data = await response.json()
+  return success({
+    institution: data.institution
+  })
+}
+
+export const listTransactions = async () => {
+  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/transactions`, { 
+    method: "GET"
+  })
+  if (!response.ok) return fail()
+  const data = await response.json()
+  return success({
+    transactions: data.transactions || []
+  })
+}
 
 export default {
   setAccessToken,
   getInfo,
   createLinkToken,
-  createLinkTokenForPayment
+  createLinkTokenForPayment,
+  listAccounts,
+  getInstitution,
+  listTransactions
 }

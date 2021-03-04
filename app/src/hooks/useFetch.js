@@ -14,13 +14,13 @@ export const useFetch = (fetchFunction) => {
 
   const fetch = async (...args) => {
     setState({ ...state, loading: true, started: true })
-    const { error, response } = await fetchFunction(...args)
-    if (error) {
+    const { status, error, ...data } = await fetchFunction(...args)
+    if (!status.ok) {
       setState({ ...state, error, loading: false, complete: true })
     } else {
-      setState({ ...state, error: null, response, loading: false, complete: true})
+      setState({ ...state, error: null, response: data, loading: false, complete: true})
     }
-    return { error, response }
+    return { status, error, ...data }
   }
 
   return {

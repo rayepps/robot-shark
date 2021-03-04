@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useCallback } from 'react'
 import Recoil from 'recoil'
+import { useHistory } from 'react-router-dom'
 import { usePlaidLink } from 'react-plaid-link'
 import api from '../api'
 import authState from '../state/auth'
@@ -9,6 +10,7 @@ export default function PlaidButton ({
   children
 }) {
   
+  const history = useHistory()
   const { linkToken } = Recoil.useRecoilValue(authState.state)
   const setAccessTokenFailed = Recoil.useSetRecoilState(authState.setFailedAccessToken)
   const setAccessToken = Recoil.useSetRecoilState(authState.setAccessToken)
@@ -28,13 +30,10 @@ export default function PlaidButton ({
       })
     }
     setToken()
-    // dispatch({ type: "SET_STATE", state: { linkSuccess: true } })
-    window.history.pushState("", "", "/")
+    history.push('/dashboard')
   }, [])
 
   const isOauth = window.location.href.includes("?oauth_state_id=")
-
-  console.log('linkToken: ', linkToken)
 
   const { open, ready } = usePlaidLink({
     token: linkToken,
