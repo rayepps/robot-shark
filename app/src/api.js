@@ -27,30 +27,8 @@ export const setAccessToken = async (publicToken) => {
   })
 }
 
-export const getInfo = async () => {
-  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/info`, { 
-    method: "POST" 
-  })
-  if (!response.ok) return fail()
-  const data = await response.json()
-  return success({
-    products: data.products || []
-  })
-}
-
 export const createLinkToken = async () => {
   const response = await fetch(`${ROBOT_SHARK_API_URL}/api/create_link_token`, { 
-    method: "POST" 
-  })
-  if (!response.ok) return fail()
-  const data = await response.json()
-  return success({
-    linkToken: data.link_token
-  })
-}
-
-export const createLinkTokenForPayment = async () => {
-  const response = await fetch(`${ROBOT_SHARK_API_URL}/api/create_link_token_for_payment`, { 
     method: "POST" 
   })
   if (!response.ok) return fail()
@@ -96,9 +74,7 @@ export const listTransactions = async () => {
 
 export default {
   setAccessToken,
-  getInfo,
   createLinkToken,
-  createLinkTokenForPayment,
   listAccounts,
   getInstitution,
   listTransactions

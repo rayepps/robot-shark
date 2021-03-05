@@ -48,20 +48,6 @@ const Container = styled.div`
 export default function Home ({ }) {
 
   const setLinkToken = Recoil.useSetRecoilState(authState.setLinkToken)
-  const setBackend = Recoil.useSetRecoilState(authState.setBackend)
-  const setProducts = Recoil.useSetRecoilState(authState.setProducts)
-
-  const getInfo = async () => {
-    const { status, products } = await api.getInfo()
-    if (!status.ok) {
-      setBackend(false)
-      return { paymentInitiation: false }
-    }
-    setProducts(products)
-    return { 
-      paymentInitiation: products.includes('payment_initiation')
-    }
-  }
 
   const generateToken = async () => {
     const { status, linkToken } = await api.createLinkToken()
@@ -73,18 +59,7 @@ export default function Home ({ }) {
     localStorage.setItem("link_token", linkToken) //to use later for Oauth
   }
 
-  const generatePaymentToken = async () => {
-    const { status, linkToken } = await api.createLinkTokenForPayment()
-    if (!status.ok) {
-      setLinkToken(null)
-      return
-    }
-    setLinkToken(linkToken)
-    localStorage.setItem("link_token", linkToken) //to use later for Oauth
-  }
-
-  const init = async () => {
-    const { paymentInitiation } = await getInfo() // used to determine which path to take when generating token
+  useEffect(() => {
     // do not generate a new token for OAuth redirect instead
     // setLinkToken from localStorage
     if (window.location.href.includes("?oauth_state_id=")) {
@@ -92,12 +67,7 @@ export default function Home ({ }) {
       setLinkToken(linkToken)
       return
     }
-    if (paymentInitiation) generatePaymentToken()
-    else generateToken()
-  }
-
-  useEffect(() => {
-    init()
+    generateToken()
   }, [])
 
   return (

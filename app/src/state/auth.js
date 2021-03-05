@@ -49,31 +49,9 @@ export const setLinkToken = selector({
   }
 })
 
-export const setBackend = selector({
-  key: 'setBackend',
-  set: ({ set, get }, backend) => {
-    set(authState, {
-      ...get(authState),
-      backend
-    })
-  }
-})
-
-export const setProducts = selector({
-  key: 'setProducts',
-  set: ({ set, get }, products) => {
-    set(authState, {
-      ...get(authState),
-      products
-    })
-  }
-})
-
 export default {
   state: authState,
   setFailedAccessToken,
   setAccessToken,
-  setLinkToken,
-  setBackend,
-  setProducts
+  setLinkToken
 }
