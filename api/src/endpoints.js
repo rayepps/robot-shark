@@ -42,21 +42,6 @@ export const setAccessToken = async (client, request) => {
   }
 }
 
-export const exchangePublicToken = async (client, request) => {
-  PUBLIC_TOKEN = request.body.public_token
-  const { error, result } = await client.exchangePublicToken(PUBLIC_TOKEN)
-  if (error) return { error }
-  ACCESS_TOKEN = result.access_token
-  ITEM_ID = result.item_id
-  return { 
-    json: {
-      access_token: ACCESS_TOKEN,
-      item_id: ITEM_ID,
-      error: null
-    }
-  }
-}
-
 export const getAccounts = async (client, request) => {
   const { error, result } = await client.getAccounts(ACCESS_TOKEN)
   if (error) return { error }
