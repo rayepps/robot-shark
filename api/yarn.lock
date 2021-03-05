@@ -882,6 +882,11 @@ qs@6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
+radash@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/radash/-/radash-0.2.1.tgz#cea4974aa20d1a2db56bceb0ed0c88d3fa6606cf"
+  integrity sha512-tTGICgm7n/mytN0h5Rv1TXKgG0dfBe5dGcZ1KZpZ/naF7DKqjJZ0JkaBATeFk0lFmUL2pu4uFvYhrkth5LaJ4Q==
+
 ramda@0.23.x:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"

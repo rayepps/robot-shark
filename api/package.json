@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A sample app and accompanying walkthrough for the Plaid API.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/server.js",
     "watch": "nodemon src/server.js",
@@ -19,6 +20,7 @@
     "express": "4.16.x",
     "moment": "2.22.x",
     "nodemon": "^2.0.5",
-    "plaid": "6.x.x"
+    "plaid": "6.x.x",
+    "radash": "^0.2.1"
   }
 }
