@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
-import Recoil from 'recoil'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import PlaidButton from '../../components/PlaidButton'
-import authState from '../../state/auth'
 import api from '../../api'
+import usePlaid from '../../hooks/usePlaid'
 
 
 const Container = styled.div`
@@ -47,28 +46,26 @@ const Container = styled.div`
 
 export default function Home ({ }) {
 
-  const setLinkToken = Recoil.useSetRecoilState(authState.setLinkToken)
+  const history = useHistory()
 
-  const generateToken = async () => {
+  const createLinkToken = async () => {
     const { status, linkToken } = await api.createLinkToken()
-    if (!status.ok) {
-      setLinkToken(null)
-      return
-    }
-    setLinkToken(linkToken)
-    localStorage.setItem("link_token", linkToken) //to use later for Oauth
+    return status.ok ? linkToken : null
   }
 
-  useEffect(() => {
-    // do not generate a new token for OAuth redirect instead
-    // setLinkToken from localStorage
-    if (window.location.href.includes("?oauth_state_id=")) {
-      const linkToken = localStorage.getItem("link_token")
-      setLinkToken(linkToken)
-      return
-    }
-    generateToken()
-  }, [])
+  const createAccessToken = async (publicToken) => {
+    await api.setAccessToken(publicToken)
+  }
+
+  const onPlaidComplete = () => {
+    history.push('/dashboard')
+  }
+
+  const { ready, open } = usePlaid({
+    createLinkToken,
+    createAccessToken,
+    onComplete: onPlaidComplete
+  })
 
   return (
     <Container>
@@ -76,7 +73,9 @@ export default function Home ({ }) {
         <img src="/robot-shark.jpg" />
         <h1>Robot Shark</h1>
         <span>&quot;shred your finances&quot;</span>
-        <PlaidButton>Connect Account</PlaidButton>
+        <button onClick={open} disabled={!ready}>
+          Connect Account
+        </button>
       </div>
     </Container>
   )

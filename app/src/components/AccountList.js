@@ -30,7 +30,7 @@ const Container = styled.div`
   }
 `
 
-export default function AccountList ({ accounts, onAccountClick }) {
+export default function AccountList ({ accounts = [], onAccountClick }) {
 
   const handleClick = (account) => () => onAccountClick(account)
 

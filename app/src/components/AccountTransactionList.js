@@ -26,7 +26,7 @@ const Container = styled.div`
   }
 `
 
-export default function AccountTransactionList ({ account, transactions }) {
+export default function AccountTransactionList ({ account, transactions = [] }) {
 
   return (
     <Container>

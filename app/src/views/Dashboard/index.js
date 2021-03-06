@@ -3,7 +3,6 @@ import Recoil from 'recoil'
 import styled from 'styled-components'
 import api from '../../api'
 import useFetch from '../../hooks/useFetch'
-import DashboardHeader from './Header.js'
 import AccountList from '../../components/AccountList'
 import AccountSummary from '../../components/AccountSummary'
 import AccountTransactionList from '../../components/AccountTransactionList'
@@ -30,6 +29,15 @@ const Container = styled.div`
     > div.rs-dashboard-split-right {
       flex: 1;
     }
+  }
+`
+
+const StyledHeader = styled.header`
+  > img {
+    width: 100px;
+  }
+  > h1 {
+    font-size: 1em;
   }
 `
 
@@ -83,7 +91,10 @@ export default function Dashboard ({ }) {
   return (
     <Container>
       <div className="rs-dashboard-content">
-        <DashboardHeader />
+        <StyledHeader>
+          <img src="/robot-shark.jpg" />
+          <h1>Robot Shark</h1>
+        </StyledHeader>
         <div className="rs-dashboard-split">
           <div className="rs-dashboard-split-left">
             <AccountList 
